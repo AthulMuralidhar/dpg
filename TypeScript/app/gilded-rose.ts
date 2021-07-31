@@ -49,51 +49,47 @@ export class GildedRose {
     }
 
     updateQuality() {
-        // CHANGE THIS ONE
-
         for (let item of this.items) {
-            if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-                if (item.quality > 0) {
-                    if (item.name != 'Sulfuras, Hand of Ragnaros') {
+            if (item.name.includes('Sulfuras')){
+                console.log('enterting Sulfuras leg')
+                console.log("item:", item)
+                item.quality = 80
+                item.sellIn -= 1
+                console.log("item:", item)
+            } else if (item.name.includes('Aged Brie') || item.name.includes('Backstage passes ')) {
+                console.log('enterting brie / backstage leg')
+                console.log("item:", item)
+                if (item.quality >= 0 && item.quality <= 50) {
+                    item.quality = item.quality + 1
+                    if (item.name.includes('Backstage passes')) {
+                        if (item.sellIn < 11 && item.sellIn >= 0) {
+                            item.quality = item.quality + 1
+                        } else if (item.sellIn < 6 && item.sellIn >= 0) {
+                            item.quality = item.quality + 2
+                        } else if (item.sellIn < 0) {
+                            item.quality = 0
+                        }
+                    }
+                    item.sellIn = item.sellIn - 1;
+                }
+                console.log("item:", item)
+
+            } else {
+                console.log('enterting normal leg')
+                console.log("item:", item)
+                if (item.quality > 0 && item.quality <= 50) {
+                    if (item.sellIn < 0) {
+                        item.quality = item.quality - item.quality
+                    } else {
                         item.quality = item.quality - 1
                     }
+                } else if (item.quality < 0) {
+                    item.quality = 0
+                } else if (item.quality > 50){
+                    item.quality = 50
                 }
-            } else {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1
-                    if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1
-                            }
-                        }
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1
-                            }
-                        }
-                    }
-                }
-            }
-            if (item.name != 'Sulfuras, Hand of Ragnaros') {
-                item.sellIn = item.sellIn - 1;
-            }
-            if (item.sellIn < 0) {
-                if (item.name != 'Aged Brie') {
-                    if (item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-                        if (item.quality > 0) {
-                            if (item.name != 'Sulfuras, Hand of Ragnaros') {
-                                item.quality = item.quality - 1
-                            }
-                        }
-                    } else {
-                        item.quality = item.quality - item.quality
-                    }
-                } else {
-                    if (item.quality < 50) {
-                        item.quality = item.quality + 1
-                    }
-                }
+                item.sellIn -= 1
+                console.log("item:", item)
             }
         }
 
