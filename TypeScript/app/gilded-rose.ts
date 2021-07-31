@@ -1,15 +1,3 @@
-export class Item {
-    // DO NOT CHANGE
-    name: string;
-    sellIn: number;
-    quality: number;
-
-    constructor(name, sellIn, quality) {
-        this.name = name;
-        this.sellIn = sellIn;
-        this.quality = quality;
-    }
-}
 
 /*
 notes
@@ -39,6 +27,20 @@ conditions:
  - "Conjured" items degrade in Quality twice as fast as normal items
 
 */
+
+export class Item {
+    // DO NOT CHANGE
+    name: string;
+    sellIn: number;
+    quality: number;
+
+    constructor(name, sellIn, quality) {
+        this.name = name;
+        this.sellIn = sellIn;
+        this.quality = quality;
+    }
+}
+
 export class GildedRose {
     items: Array<Item>;
 
@@ -48,6 +50,37 @@ export class GildedRose {
 
     updateQuality() {
         // CHANGE THIS ONE
+
+        for (let item of this.items){
+            try {
+                if (item.name.includes('Sulfuras')) {
+                    if (item.quality !== 80) {
+                        throw Error(`Item name: ${item.name} cannot have quantity: ${item.quality}. It should be 80`)
+                    }
+
+                } else {
+                    if (item.quality >= 0 && item.quality <= 50){
+                        // quality update leg
+                        // valid quality values
+
+
+                        // make chekcs for bire and backestage passes then do the update
+
+                    } else {
+                        
+                        throw Error(`quality should not be > 50 or < 0 (current value: ${item.quality}) )for ${item.name}`)
+                    }
+
+                }
+
+
+            } catch (e) {
+                console.log('ERROR:', e)
+            }
+
+
+        }
+
         for (let i = 0; i < this.items.length; i++) {
             if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
                 if (this.items[i].quality > 0) {
