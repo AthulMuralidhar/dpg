@@ -35,7 +35,6 @@ Conjured Mana Cake 2 5
 *
 * */
 
-
 const items = [
     new Item("+5 Dexterity Vest", 10, 20), //
     new Item("Aged Brie", 2, 0), //

@@ -51,15 +51,13 @@ export class GildedRose {
     updateQuality() {
         for (let item of this.items) {
             if (item.name.includes('Sulfuras')){
-                console.log('enterting Sulfuras leg')
-                console.log("item:", item)
+                // console.log('enterting Sulfuras leg')
+                // console.log("item:", item)
                 item.quality = 80
-                item.sellIn -= 1
-                console.log("item:", item)
+                // console.log("item:", item)
             } else if (item.name.includes('Aged Brie') || item.name.includes('Backstage passes ')) {
-                console.log('enterting brie / backstage leg')
-                console.log("item:", item)
-                if (item.quality >= 0 && item.quality <= 50) {
+                // console.log('enterting brie / backstage leg')
+                // console.log("item:", item)
                     item.quality = item.quality + 1
                     if (item.name.includes('Backstage passes')) {
                         if (item.sellIn < 11 && item.sellIn >= 0) {
@@ -70,13 +68,16 @@ export class GildedRose {
                             item.quality = 0
                         }
                     }
-                    item.sellIn = item.sellIn - 1;
+                if (item.quality > 50) {
+                    item.quality = 50
                 }
-                console.log("item:", item)
+                    item.sellIn = item.sellIn - 1;
+
+                // console.log("item:", item)
 
             } else {
-                console.log('enterting normal leg')
-                console.log("item:", item)
+                // console.log('enterting normal leg')
+                // console.log("item:", item)
                 if (item.quality > 0 && item.quality <= 50) {
                     if (item.sellIn < 0) {
                         item.quality = item.quality - item.quality
@@ -89,7 +90,7 @@ export class GildedRose {
                     item.quality = 50
                 }
                 item.sellIn -= 1
-                console.log("item:", item)
+                // console.log("item:", item)
             }
         }
 
