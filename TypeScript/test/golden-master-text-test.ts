@@ -1,5 +1,13 @@
 import { Item, GildedRose } from '../app/gilded-rose';
 
+
+/*
+* this is just a fixture file for the tests
+*so maybe dont alter it?
+* */
+
+
+
 const items = [
     new Item("+5 Dexterity Vest", 10, 20), //
     new Item("Aged Brie", 2, 0), //
