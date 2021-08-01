@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 class Item:
     def __init__(self, name, sell_in, quality):
         self.name = name
@@ -27,14 +28,14 @@ class GildedRose(object):
                         item.quality += 2
                     elif item.sell_in < 0:
                         item.quality = 0
-                
+
                 if item.quality > 50:
                     item.quality = 50
-                
+
                 item.sell_in -= 1
             else:
                 if item.quality > 0 and item.quality <= 50:
-                    if item.sell_in < 0  or "Conjured" in item.name:
+                    if item.sell_in < 0 or "Conjured" in item.name:
                         item.quality = item.quality - item.quality
                     else:
                         item.quality -= 1
@@ -42,9 +43,5 @@ class GildedRose(object):
                     item.quality = 0
                 elif item.quality > 50:
                     item.quality = 50
-                
+
                 item.sell_in -= 1
-
-
-
-
