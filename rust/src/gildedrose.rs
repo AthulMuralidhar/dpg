@@ -34,7 +34,7 @@ impl GildedRose {
         for item in &mut self.items {
 
             if item.name.contains("Sulfuras"){
-                item.quality = 0;
+                item.quality = 80;
             } else if item.name.contains("Aged Brie") || item.name.contains("Backstage passes")  {
                 item.quality += 1;
                 if item.name.contains("Backstage passes") {
