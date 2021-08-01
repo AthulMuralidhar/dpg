@@ -83,3 +83,26 @@ impl GildedRose {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::{GildedRose, Item};
+
+    #[test]
+    pub fn foo() {
+        let items = vec![Item::new("+5 Dexterity Vest", 10, 20)];
+        let mut rose = GildedRose::new(items);
+        rose.update_quality();
+
+        assert_eq!("+5 Dexterity Vest", rose.items[0].name);
+        assert_eq!(9, rose.items[0].sell_in);
+        assert_eq!(19, rose.items[0].quality);
+
+        rose.update_quality();
+
+        assert_eq!("+5 Dexterity Vest", rose.items[0].name);
+        assert_eq!(8, rose.items[0].sell_in);
+        assert_eq!(18, rose.items[0].quality);
+    }
+    
+}
