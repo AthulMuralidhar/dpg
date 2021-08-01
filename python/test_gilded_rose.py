@@ -103,3 +103,54 @@ def test__not_update_quality_for_normal_item_for_quality_less_than_0():
     assert items[0].name == "+5 Dexterity Vest"
     assert items[0].sell_in == 9
     assert items[0].quality == 0
+
+
+def test__not_update_quality_for_normal_item_for_quality_greater_than_50():
+    items = [Item("+5 Dexterity Vest", 10, 60)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "+5 Dexterity Vest"
+    assert items[0].sell_in == 9
+    assert items[0].quality == 50
+
+
+def test__not_update_quality_for_backstage_tickets_item_for_quality_greater_than_50():
+    items = [Item("Backstage passes to a TAFKAL80ETC concert", 10, 60)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "Backstage passes to a TAFKAL80ETC concert"
+    assert items[0].sell_in == 9
+    assert items[0].quality == 50
+
+
+def test__should_update_quality_for_normal_item_for_sell_in_less_than_0():
+    items = [Item("+5 Dexterity Vest", -1, 50)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "+5 Dexterity Vest"
+    assert items[0].sell_in == -2
+    assert items[0].quality == 0
+
+def test__update_quality_for_Conjured_item():
+    items = [Item("Conjured Mana Cake", 13, 50)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "Conjured Mana Cake"
+    assert items[0].sell_in == 12
+    assert items[0].quality == 0
+
+def test__not_update_quality_for_backstage_tickets_item_for_sellin_less_than_0():
+    items = [Item("Backstage passes to a TAFKAL80ETC concert", -1, 50)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "Backstage passes to a TAFKAL80ETC concert"
+    assert items[0].sell_in == -2
+    assert items[0].quality == 0
+
+def test__should_set_negative_quality_for_Brie_to_0():
+    items = [Item("Aged Brie", 2, -1)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].name == "Aged Brie"
+    assert items[0].sell_in == 1
+    assert items[0].quality == 0
