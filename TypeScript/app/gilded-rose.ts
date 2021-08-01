@@ -1,35 +1,4 @@
-
-/*
-notes
-- in essence this is basically like a system where an item degrades in quality
- the worst quality is on the last day or the sell in day
-- update quality just lowers the quality and sell in date by some ammount
--
-
-conditions:
-- if current date > sell in date then the quality lowers by 2* degrading rate
-- quality should be always >= 0
-- item name: aged brie increases in quality as it sits past the sell in date
-- quality should be always <= 50
-- function updatequality has no effect  on item.name=== Sulfuras
-        - special case "Sulfuras"
-            -  Quality is 80 and it never alters.
-
--  item name = "Backstage passes", like aged brie, increases in Quality as its SellIn value approaches;
-        - special case for back stage passes:
-            - Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less
-            - but Quality drops to 0 after the concert
-
-
- New feature to impliment:
- - new type of items = conjured items
- conditions:
- - "Conjured" items degrade in Quality twice as fast as normal items
-
-*/
-
 export class Item {
-    // DO NOT CHANGE
     name: string;
     sellIn: number;
     quality: number;
@@ -49,81 +18,37 @@ export class GildedRose {
     }
 
     updateQuality() {
-        // CHANGE THIS ONE
-
-        for (let item of this.items){
-            try {
-                if (item.name.includes('Sulfuras')) {
-                    if (item.quality !== 80) {
-                        throw Error(`Item name: ${item.name} cannot have quantity: ${item.quality}. It should be 80`)
-                    }
-
-                } else {
-                    if (item.quality >= 0 && item.quality <= 50){
-                        // quality update leg
-                        // valid quality values
-
-
-                        // make chekcs for bire and backestage passes then do the update
-
-                    } else {
-                        
-                        throw Error(`quality should not be > 50 or < 0 (current value: ${item.quality}) )for ${item.name}`)
-                    }
-
-                }
-
-
-            } catch (e) {
-                console.log('ERROR:', e)
-            }
-
-
-        }
-
-        for (let i = 0; i < this.items.length; i++) {
-            if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-                if (this.items[i].quality > 0) {
-                    if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                        this.items[i].quality = this.items[i].quality - 1
+        for (let item of this.items) {
+            if (item.name.includes('Sulfuras')){
+                item.quality = 80
+            } else if (item.name.includes('Aged Brie') || item.name.includes('Backstage passes ')) {
+                item.quality = item.quality + 1
+                if (item.name.includes('Backstage passes')) {
+                    if ( item.sellIn < 11 && item.sellIn > 6) {
+                        item.quality = item.quality + 1
+                    } else if (item.sellIn < 6 && item.sellIn >= 0) {
+                        item.quality = item.quality + 2
+                    } else if (item.sellIn < 0) {
+                        item.quality = 0
                     }
                 }
+                if (item.quality > 50) {
+                    item.quality = 50
+                }
+                item.sellIn = item.sellIn - 1;
             } else {
-                if (this.items[i].quality < 50) {
-                    this.items[i].quality = this.items[i].quality + 1
-                    if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-                        if (this.items[i].sellIn < 11) {
-                            if (this.items[i].quality < 50) {
-                                this.items[i].quality = this.items[i].quality + 1
-                            }
-                        }
-                        if (this.items[i].sellIn < 6) {
-                            if (this.items[i].quality < 50) {
-                                this.items[i].quality = this.items[i].quality + 1
-                            }
-                        }
-                    }
-                }
-            }
-            if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                this.items[i].sellIn = this.items[i].sellIn - 1;
-            }
-            if (this.items[i].sellIn < 0) {
-                if (this.items[i].name != 'Aged Brie') {
-                    if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-                        if (this.items[i].quality > 0) {
-                            if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                                this.items[i].quality = this.items[i].quality - 1
-                            }
-                        }
+                if (item.quality > 0 && item.quality <= 50) {
+                    if (item.sellIn < 0 || item.name.includes('Conjured')) {
+                        item.quality = item.quality - item.quality
                     } else {
-                        this.items[i].quality = this.items[i].quality - this.items[i].quality
+                        item.quality = item.quality - 1
                     }
-                } else {
-                    if (this.items[i].quality < 50) {
-                        this.items[i].quality = this.items[i].quality + 1
-                    }
+                } else if (item.quality < 0) {
+                    item.quality = 0
+                } else if (item.quality > 50){
+                    item.quality = 50
                 }
+                item.sellIn -= 1
             }
         }
 
